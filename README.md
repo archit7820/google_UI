@@ -16,7 +16,7 @@ To give you a visual representation of the project, here are three preview image
 
 ## Image 1: Home Search Page
 This image displays the main search interface where users can enter text or use voice search. It highlights the clean design and the easy access to search functionalities.
-<img src ="[https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.123rf.com%2F&psig=AOvVaw1XVG_E6hvDQPWWLKaymxwg&ust=1733947104306000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCLCBnLv-nYoDFQAAAAAdAAAAABAE](https://img.freepik.com/free-photo/abstract-autumn-beauty-multi-colored-leaf-vein-pattern-generated-by-ai_188544-9871.jpg?t=st=1733860786~exp=1733864386~hmac=c5c42e4d03a56ee93fa8e0bb10b77bd52ecde19320dd78835f14944b6bc7cd20&w=1060)" alt = "" />
+<img src ="./preview_3.png" alt = "" />
 
 <img src ="./preview_2.png" alt = "" />
 
@@ -28,7 +28,7 @@ This preview shows the image upload section integrated with react-dropzone. It a
 
 ## Image 3: Bookmark Manager
 This image illustrates the bookmark manager functionality. Users can add, edit, and delete shortcuts to their most visited URLs. It showcases the storage in IndexedDB, allowing for persistent data without loss.
-<img src ="" alt = "" />
+
 <img src ="./preview_4.png" alt = "" />
 
 
