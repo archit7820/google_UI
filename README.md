@@ -16,20 +16,20 @@ To give you a visual representation of the project, here are three preview image
 
 ## Image 1: Home Search Page
 This image displays the main search interface where users can enter text or use voice search. It highlights the clean design and the easy access to search functionalities.
-<img src ="./preview4.png" alt = "" />
+<img src ="./preview_4.png" alt = "" />
 
-<img src ="./preview2.png" alt = "" />
+<img src ="./preview_2.png" alt = "" />
 
 ## Image 2: Image Upload 
 This preview shows the image upload section integrated with react-dropzone. It allows users to drag and drop images, and perform image recognition using Google Vision API.
 
-<img src ="./preview1.png" alt = "" />
+<img src ="./preview_1.png" alt = "" />
 
 
 ## Image 3: Bookmark Manager
 This image illustrates the bookmark manager functionality. Users can add, edit, and delete shortcuts to their most visited URLs. It showcases the storage in IndexedDB, allowing for persistent data without loss.
 <img src ="" alt = "" />
-<img src ="./preview4.png" alt = "" />
+<img src ="./preview_4.png" alt = "" />
 
 
 ## Features
