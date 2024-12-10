@@ -166,7 +166,7 @@ export default function Home() {
   };
 
 
-localStorage.removeItem('uploadedImage');
+//localStorage.removeItem('uploadedImage');
 
   return (
     <div className="home_page_google">
