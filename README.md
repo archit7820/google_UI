@@ -11,6 +11,27 @@
 ## Introduction
 Google UI is a feature-rich NEXTJS project designed to emulate the user interface and experience of Google. This project showcases a sleek and modern design with advanced functionalities, including image search, voice search, image recognition using Google Vision API, and more. Built with cutting-edge libraries and frameworks, Google UI offers a robust and user-friendly solution for web search functionalities.
 
+## Image Preview
+To give you a visual representation of the project, here are three preview images showcasing different features of the Google UI:
+
+## Image 1: Home Search Page
+This image displays the main search interface where users can enter text or use voice search. It highlights the clean design and the easy access to search functionalities.
+<img src ="./preview4.png" alt = "" />
+
+<img src ="./preview2.png" alt = "" />
+
+## Image 2: Image Upload 
+This preview shows the image upload section integrated with react-dropzone. It allows users to drag and drop images, and perform image recognition using Google Vision API.
+
+<img src ="./preview1.png" alt = "" />
+
+
+## Image 3: Bookmark Manager
+This image illustrates the bookmark manager functionality. Users can add, edit, and delete shortcuts to their most visited URLs. It showcases the storage in IndexedDB, allowing for persistent data without loss.
+<img src ="" alt = "" />
+<img src ="./preview4.png" alt = "" />
+
+
 ## Features
 - **Text Search**: Implements a text search similar to Google, allowing users to quickly search the web for any query.
 - **Voice Search**: Utilizes `react-speech-recognition` library (version ^3.10.0) to provide a seamless voice search experience. Users can dictate their search queries and get results with minimal delay.
@@ -63,7 +84,11 @@ To get started with Google UI, follow these steps:
    - Enter the name and URL for the shortcut.
    - Use the `edit` icon to modify an existing bookmark.
    - Use the `delete` icon to remove a shortcut.
-   - A maximum of 9 bookmarks can be saved.
+   - A maximum of 8 bookmarks can be saved.
+
+Persistent Storage with IndexedDB
+All bookmarks are stored in IndexedDB, ensuring that the data is not lost even if the application is refreshed. The IndexedDB database is limited to storing a maximum of 9 bookmarks. If the limit is reached, users will receive a notification informing them that they cannot save any more shortcuts.
+
 
 4. **Design Consistency**:
    - The project adheres closely to Google’s design patterns, with a clean, minimalist design, responsive layout, and smooth animations.
