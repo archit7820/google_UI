@@ -16,7 +16,7 @@ To give you a visual representation of the project, here are three preview image
 
 ## Image 1: Home Search Page
 This image displays the main search interface where users can enter text or use voice search. It highlights the clean design and the easy access to search functionalities.
-<img src ="./preview_4.png" alt = "" />
+<img src ="./preview_3.png" alt = "" />
 
 <img src ="./preview_2.png" alt = "" />
 
