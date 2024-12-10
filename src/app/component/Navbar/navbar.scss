@@ -1,0 +1,31 @@
+.navbar_container{
+    background-color: rgb(255, 255, 255);
+    display: flex ;
+    justify-content: right;
+    font-family: 'Roboto', 'Arial', sans-serif;
+    color:  rgba(0, 0, 0, .87);
+}
+.left_options{
+display: flex;
+gap : 1rem ;
+
+}
+.text_options{
+   display: flex;
+    font-size: 14px;
+    gap : 1rem ;
+    justify-content: center;
+    align-items: center;
+}
+.img_section_navbar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap : 1rem ;
+    }
+
+.accont_name{
+    height : 32px ;
+ width : 32px ;
+    border-radius: 50%;
+}

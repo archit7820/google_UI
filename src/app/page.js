@@ -1,101 +1,315 @@
-import Image from "next/image";
+"use client"; // Enable client-side rendering
+import { useState, useRef } from "react"; // Import useRef
+import "./page.scss";
+import Navbar from "./component/Navbar/Navbar";
+import Footer from "./component/Footer/Footer";
+import { useRouter } from "next/navigation";
+import Cropper from "cropperjs";
+import "cropperjs/dist/cropper.css";
+import axios from "axios";
+import AddShortcut from "./component/Shortcut/shortcut";
+
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [query, setQuery] = useState("");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const inputRef = useRef(null);
+ 
+  const handleWrapperClick = () => {
+    setIsDropdownOpen(true);
+  
+    // Add a null check before calling focus
+    if (inputRef.current) {
+      inputRef.current.focus();
+     }
+     };
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const handleInputChange = (e) => {
+    setQuery(e.target.value);
+   };
+
+  const suggestions = ["Google", "Gmail", "Drive", "Search", "Maps"]; // Example suggestions
+  const [isImageRecognitionVisible, setImageRecognitionVisible] = useState(false);
+
+  const handleImageScanClick = () => {
+    setImageRecognitionVisible(true); // Show the image recognition section
+  };
+
+  const handleCloseImageRecognition = () => {
+    setImageRecognitionVisible(false); // Hide the image recognition section
+  }
+
+
+
+  // image upload 
+
+    const [isDragging, setIsDragging] = useState(false); // For drag-over effect
+    const [selectedImage, setSelectedImage] = useState(null);
+    const router = useRouter();
+  
+    const handleDragEnter = (e) => {
+      e.preventDefault();
+      setIsDragging(true);
+    };
+  
+    const handleDragOver = (e) => {
+      e.preventDefault();
+      setIsDragging(true);
+    };
+  
+    const handleDragLeave = (e) => {
+      e.preventDefault();
+      setIsDragging(false);
+    };
+  
+    const handleDrop = (e) => {
+      e.preventDefault();
+      setIsDragging(false);
+      const file = e.dataTransfer.files[0];
+      if (file) {
+        processImage(file);
+      }
+    };
+   
+ 
+    const [imageData, setImageData] = useState(null);
+  
+  
+    const processImage = (file) => {
+      const reader = new FileReader();
+      
+      reader.onload = () => {
+        const imageDataUrl = reader.result;
+        
+        // Store image data in localStorage
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('uploadedImage', imageDataUrl);
+          
+          // Navigate to test page
+          router.push('/result');
+        }
+      };
+      
+      reader.readAsDataURL(file);
+    };
+    const handleFileChange = (e) => {
+      const file = e.target.files?.[0];
+      if (file) {
+        processImage(file);
+      }
+    };
+  
+
+    const handleImageUpload = (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        processImage(file); // Process the image and send it as props
+      }
+    }
+  
+    const triggerFileInput = () => {
+      document.getElementById("file-input").click();
+    };
+
+
+// listening  to google serach result 
+        const [isListening, setIsListening] = useState(false);
+        const startListening = () => {
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = "en-US";
+        recognition.start();
+        setIsListening(true);
+        recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        recognition.stop();
+        setIsListening(false);
+// Redirect to Google search
+        window.location.href = `https://www.google.com/search?q=${encodeURIComponent(transcript)}`;
+        };
+        recognition.onerror = () => {
+        console.error("Error recognizing speech");
+        setIsListening(false);
+        };
+        recognition.onend = () => {
+        setIsListening(false);
+        };
+      };
+
+// google search text 
+        const handleKeyDown = (event) => {
+          if (event.key === "Enter" && query.trim() !== "") {
+          window.location.href = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+        }
+        };
+
+ // url search 
+ const [url, setUrl] = useState("");
+
+  const handleSearch = () => {
+    if (isValidURL(url)) {
+      window.location.href = url; 
+    } else {
+      alert("Please enter a valid URL (e.g., https://example.com)");
+    }
+  };
+
+  
+  
+
+  const isValidURL = (str) => {
+    try {
+      new URL(str);
+      return true;
+    } catch (_) {
+      return false;
+    }
+  };
+
+
+
+
+  return (
+    <div className="home_page_google">
+      <div className="google_header">
+        <Navbar />
+      </div>
+
+      <div className="home_page_container">
+        <div className="google_logo">
+          <img className="icon_logo_google" src="google_logo.svg" alt="Google Logo" />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+
+<div className="input_wrapper" onClick={handleWrapperClick}>
+           
+  
+{!isImageRecognitionVisible && (
+   <div className="search_section">
+     <img className="search_icon" src="./search_cr23.svg" alt="Search Icon" />
+  <input
+    type="text"
+    value={query}
+    onChange={handleInputChange}
+    onKeyDown={handleKeyDown}
+    placeholder="Search Google or type a URL"
+    className="input_field_google_search"
+    ref={inputRef}
+  />
+  <div className="search_options_google">
+  <img
+        className="mic_search"
+        src="./mic.svg"
+        alt="Mic Search"
+        onClick={startListening}
+        style={{ cursor: "pointer" }}
+      />
+      {isListening && <p>Listening...</p>}
+    <img className="image_scan" src="./camera.svg"  onClick={handleImageScanClick}  alt="Image Scan" />
+  </div>
+
+    </div> 
+    )}
+
+      <div className="suggestion">
+     {isDropdownOpen && query.trim() && (
+    <div className="suggestions_container">
+      {suggestions
+        .filter((item) =>
+          item.toLowerCase().includes(query.toLowerCase())
+        )
+        .map((suggestion, index) => (
+          <div key={index} className="dropdown-item">
+            {suggestion}
+          </div>
+        ))}
+    </div>
+  )}
+      </div>
+
+
+                        {isImageRecognitionVisible && (
+                          <div className="image_recognization_section"  >
+                         <div className="image_search_section_1">  
+                         <div className="headline_text_image_search">   Search any image with Lens</div>
+                         <div className="Close_button" onClick={handleCloseImageRecognition}>
+                           ✖
+                          </div>
+                          </div>
+
+                          <div className="main_image_container_bg">
+          <div
+      className={`image_search_block ${isDragging ? "drag-over" : ""}`}
+      onDragEnter={handleDragEnter}
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDrop}
+    >
+      <div className="field_image" onClick={triggerFileInput}>
+        <img src="./image_search.svg" alt="Image Search" />
+        <div className="text_image">
+          {isDragging ? (
+            <span style={{ fontWeight: "bold" }}>Drop an image here</span>
+          ) : (
+            <>
+              Drag an image here or{" "}
+              <span style={{ color: "#1967D2", cursor: "pointer"  , textDecoration : "underline"}}>
+                upload a file
+              </span>
+            </>
+          )}
+        </div>
+        <input
+          id="file-input"
+          type="file"
+          accept="image/*"
+          onChange={handleImageUpload}
+          className="file-input"
+          style={{ display: "none" }}
+        />
+      </div>
+     
+    </div>
+
+
+   
+ <div className="text_link_input_andline"> 
+
+<div className="line_divide">
+
+    <div className="line"></div> 
+    <div className="text_line_divide">OR</div>
+    <div className="line"></div>
+    </div>
+
+
+    <div className="text_link_input">  
+  <input
+  type="text"
+  value={url}
+  onChange={(e) => setUrl(e.target.value)}
+  //onKeyDown={handleSearch}
+  className="input_url_image"
+   placeholder="Paste image link"/>
+  <div className="search_url_image" onClick={handleSearch}>search</div>
+ </div>
+
+ </div>
+ </div>
+
+
+    </div>  )}
+
+</div>
+
+<AddShortcut/>
+
+ 
+
+
+
+      </div>
+
+
     </div>
   );
 }

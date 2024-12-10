@@ -1,0 +1,14 @@
+.footer-section{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 14px;
+    color:  rgba(0, 0, 0, .87);
+}
+.footer_section_right ,.footer_section_left{
+    display: flex;
+    gap : 0.5rem ;
+}
+.footer-section_top{
+    border-bottom: 1px solid gray;
+}
