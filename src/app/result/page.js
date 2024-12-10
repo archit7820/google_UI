@@ -31,9 +31,10 @@ const ImageSearchWithCrop = () => {
     }
   }, []);
 
-  const GOOGLE_VISION_API_KEY = "";
-  const GOOGLE_CSE_API_KEY = "";
-  const GOOGLE_CX = "";
+  const GOOGLE_VISION_API_KEY = process.env.GOOGLE_VISION_API_KEY;
+  const GOOGLE_CSE_API_KEY = process.env.GOOGLE_CSE_API_KEY;
+  const GOOGLE_CX = process.env.GOOGLE_CX;
+  
 
   const initCropper = (imageSrc) => {
     const imageElement = imageRef.current;
