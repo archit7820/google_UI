@@ -134,7 +134,7 @@ export default function Home() {
         setIsListening(false);
         };
       };
-
+      //
 // google search text 
         const handleKeyDown = (event) => {
           if (event.key === "Enter" && query.trim() !== "") {
@@ -166,7 +166,7 @@ export default function Home() {
   };
 
 
-
+localStorage.removeItem('uploadedImage');
 
   return (
     <div className="home_page_google">

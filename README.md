@@ -28,7 +28,7 @@ This preview shows the image upload section integrated with react-dropzone. It a
 
 ## Image 3: Bookmark Manager
 This image illustrates the bookmark manager functionality. Users can add, edit, and delete shortcuts to their most visited URLs. It showcases the storage in IndexedDB, allowing for persistent data without loss.
-<img src ="" alt = "" />
+
 <img src ="./preview_4.png" alt = "" />
 
 

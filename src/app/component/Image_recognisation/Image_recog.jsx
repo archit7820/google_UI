@@ -3,6 +3,7 @@
   import React, { useEffect, useState } from "react";
   import Cropper from "cropperjs";
   import axios from "axios";
+  import "./recog.scss"
   
   const ImageSearchWithCrop = ({ uploadedImage }) => {
     const [image, setImage] = useState(null);
@@ -138,20 +139,16 @@
       } finally {
         setLoading(false);
       }
+      setTimeout(() => {
+        localStorage.removeItem('uploadedImage');
+      }, 2000);
     };
   
     return (
-      <div style={{ textAlign: "center", margin: "20px" }}>
-        <h2>Search Similar Images</h2>
-        {image && (
-          <div style={{ margin: "20px 0" }}>
-            <img
-              id="image-to-crop"
-              alt="Crop target"
-              style={{ maxWidth: "100%", display: image ? "block" : "none" }}
-            />
-          </div>
-        )}
+      <div className="image_recognisation_container" style={{ textAlign: "center", margin: "20px" }}>
+        <div>Se</div>
+        <img src={localStorage.getItem('uploadedImage')} alt="Uploaded" />
+
         <button onClick={handleCrop} style={{ marginRight: "10px" }}>
           Crop and Confirm
         </button>
@@ -159,7 +156,7 @@
   
         {loading && (
           <div style={{ marginTop: "20px" }}>
-            <p>Processing Image...</p>
+            <p>Process..</p>
             <div
               style={{
                 width: "100%",
