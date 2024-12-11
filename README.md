@@ -16,20 +16,48 @@ To give you a visual representation of the project, here are three preview image
 
 ## Image 1: Home Search Page
 This image displays the main search interface where users can enter text or use voice search. It highlights the clean design and the easy access to search functionalities.
-<img src ="./preview_3.png" alt = "" />
 
-<img src ="./preview_2.png" alt = "" />
+![Feature Screenshot](public/preview_3.png)
+
+![Feature Screenshot](public/preview_2.png)
 
 ## Image 2: Image Upload 
 This preview shows the image upload section integrated with react-dropzone. It allows users to drag and drop images, and perform image recognition using Google Vision API.
 
-<img src ="./preview_1.png" alt = "" />
+![Feature Screenshot](public/preview_1.png)
+
+## Crop Section of the Image:
+
+The image can be cropped by selecting the desired area.
+Aspect Ratio: The crop feature supports maintaining a fixed aspect ratio (1:1 for square images).
+Crop Confirmation: After selecting the crop area, users can confirm the crop, and the selected section will be processed.
+
+Analyze Whole Image:
+
+Automatically analyzes the entire uploaded image for relevant features (labels, objects, etc.).
+Uses Google Vision API to extract information from the image.
+Analyze Cropped Section:
+
+![Feature Screenshot](public/preview_6.png)
+
+After cropping, users can analyze only the selected section of the image.
+This enables users to get more focused insights about specific parts of the image.
+Results Display:
+
+![Feature Screenshot](public/preview_5.png)
+
+Once analysis is complete, the results (labels, objects) are displayed in a grid format.
+Responsive Grid: Results are shown in a 3x3 grid layout, allowing easy navigation through multiple results.
+
+
+
 
 
 ## Image 3: Bookmark Manager
 This image illustrates the bookmark manager functionality. Users can add, edit, and delete shortcuts to their most visited URLs. It showcases the storage in IndexedDB, allowing for persistent data without loss.
 
-<img src ="./preview_4.png" alt = "" />
+
+![Feature Screenshot](public/preview_4.png)
 
 
 ## Features
