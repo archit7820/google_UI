@@ -1,11 +1,16 @@
 
 
-"use client"
+
+  "use client";
 
 import Cropper from "cropperjs";
+import "cropperjs/dist/cropper.css";
 import axios from "axios";
-import { useState , useRef , useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import "./recog.scss";
+import Navbar from "../component/Navbar/Navbar";
+import Link from "next/link";
 
 const ImageSearchWithCrop = () => {
   const [image, setImage] = useState(null);
@@ -14,50 +19,46 @@ const ImageSearchWithCrop = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [progress, setProgress] = useState(0);
   const imageRef = useRef(null);
   const router = useRouter();
 
   useEffect(() => {
-    // Retrieve image from localStorage when component mounts
-    if (typeof window !== 'undefined') {
-      const storedImage = localStorage.getItem('uploadedImage');
+    if (typeof window !== "undefined") {
+      const storedImage = localStorage.getItem("uploadedImage");
       if (storedImage) {
         setImage(storedImage);
-        initCropper(storedImage);
-        // Optional: Clear the stored image after retrieval
-        // localStorage.removeItem('uploadedImage');
       }
     }
   }, []);
+    
+   const GOOGLE_VISION_API_KEY = "";
+   const GOOGLE_CSE_API_KEY = "";
+   const GOOGLE_CX = "";
 
-  const GOOGLE_VISION_API_KEY = process.env.GOOGLE_VISION_API_KEY;
-  const GOOGLE_CSE_API_KEY = process.env.GOOGLE_CSE_API_KEY;
-  const GOOGLE_CX = process.env.GOOGLE_CX;
-  
-
-  const initCropper = (imageSrc) => {
-    const imageElement = imageRef.current;
-    if (imageElement) {
+  useEffect(() => {
+    if (image && imageRef.current) {
       if (cropper) {
         cropper.destroy();
       }
-      imageElement.src = imageSrc;
-      const newCropper = new Cropper(imageElement, {
+      const newCropper = new Cropper(imageRef.current, {
         aspectRatio: 1,
         viewMode: 2,
+        autoCropArea: 0.8,
+        responsive: true,
+        background: false,
       });
       setCropper(newCropper);
     }
-  };
+  }, [image]);
 
   const handleCrop = () => {
     if (cropper) {
       const croppedCanvas = cropper.getCroppedCanvas();
       if (croppedCanvas) {
-        setCroppedImage(croppedCanvas.toDataURL("image/jpeg"));
+        const croppedImageUrl = croppedCanvas.toDataURL("image/jpeg");
+        setCroppedImage(croppedImageUrl);
       } else {
-        setCroppedImage(image); // Fallback to full image if cropping fails
+        setError("Unable to crop the image. Please try again.");
       }
     }
   };
@@ -76,9 +77,10 @@ const ImageSearchWithCrop = () => {
         }
       );
 
-      const labels = response.data.responses[0]?.labelAnnotations?.map(
-        (label) => label.description
-      ) || [];
+      const labels =
+        response.data.responses[0]?.labelAnnotations?.map(
+          (label) => label.description
+        ) || [];
       return labels.join(", ");
     } catch (err) {
       console.error("Error analyzing image:", err);
@@ -111,8 +113,8 @@ const ImageSearchWithCrop = () => {
 
   const handleSearch = async () => {
     const base64Image = croppedImage
-      ? croppedImage.split(",")[1] // Cropped image
-      : image?.split(",")[1]; // Fallback to original image
+      ? croppedImage.split(",")[1]
+      : image?.split(",")[1];
 
     if (!base64Image) {
       setError("No valid image to process. Please upload or confirm the image.");
@@ -122,28 +124,17 @@ const ImageSearchWithCrop = () => {
     setLoading(true);
     setError("");
     setSearchResults([]);
-    setProgress(0);
 
     try {
-      // Show progress bar animation
-      const interval = setInterval(() => {
-        setProgress((prev) => (prev < 100 ? prev + 10 : prev));
-      }, 300);
-
-      // Analyze image for search query
       const query = await analyzeImage(base64Image);
-
       if (!query) {
         setError("No meaningful labels found in the image.");
         setLoading(false);
         return;
       }
 
-      // Perform Google Image Search
       const results = await searchGoogleImages(query);
       setSearchResults(results);
-      clearInterval(interval);
-      setProgress(100);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -152,82 +143,107 @@ const ImageSearchWithCrop = () => {
   };
 
   return (
-    <div style={{ textAlign: "center", margin: "20px" }}>
-      <h2>Search Similar Images</h2>
-      {image && (
-        <div style={{ margin: "20px 0" }}>
-          <img
-            ref={imageRef}
-            id="image-to-crop"
-            alt="Crop target"
-            style={{ maxWidth: "100%", display: image ? "block" : "none" }}
-          />
-        </div>
-      )}
-      <button onClick={handleCrop} style={{ marginRight: "10px" }}>
-        Crop and Confirm
-      </button>
-      <button onClick={handleSearch}>Search</button>
-
-      {loading && (
-        <div style={{ marginTop: "20px" }}>
-          <p>Processing Image...</p>
-          <div
-            style={{
-              width: "100%",
-              backgroundColor: "#f3f3f3",
-              borderRadius: "10px",
-              height: "20px",
-              margin: "10px 0",
-              position: "relative",
-            }}
-          >
-            <div
-              style={{
-                width: `${progress}%`,
-                backgroundColor: "#4caf50",
-                height: "100%",
-                borderRadius: "10px",
-              }}
-            />
-          </div>
-        </div>
-      )}
-
-      {error && <p style={{ color: "red" }}>{error}</p>}
-
-      {searchResults.length > 0 && (
-        <div>
-          <h3>Search Results:</h3>
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "center",
-            }}
-          >
-            {searchResults.map((result, index) => (
-              <a
-                key={index}
-                href={result.link}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+    <div className="navbar_img_recog">
+      <div className="navbar_img">
+        <Navbar />
+      </div>
+      <div>
+        <Link href="/">
+          <img className="icon_logo_google" src="./google_logo.svg" alt="Logo" />
+        </Link>
+      </div>
+      <div className="image_recognisation_container">
+        <div className="Image_uploadedtocrop">
+          <div className="image_buttons">
+            <div className="headline_img">Search Similar Images</div>
+            {image && (
+              <div>
                 <img
-                  src={result.link}
-                  alt={result.title}
+                  ref={imageRef}
+                  src={image}
+                  id="image-to-crop"
+                  alt="Crop target"
                   style={{
-                    width: "200px",
-                    height: "200px",
-                    margin: "10px",
-                    boxShadow: "0 0 10px rgba(255, 223, 0, 0.8)",
+                    maxWidth: "100%",
+                    display: "block",
                   }}
                 />
-              </a>
-            ))}
+              </div>
+            )}
+          </div>
+          <div className="button_cropandsearch">
+            <button className="crop_button" onClick={handleCrop}>
+              Crop and Confirm
+            </button>
+            <button className="search_button" onClick={handleSearch}>
+              Search
+            </button>
           </div>
         </div>
-      )}
+        <div className="response_from_recog">
+        {loading && (
+  <div
+    style={{
+      marginTop: "20px",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+    }}
+  >
+    <p>Processing Image...</p>
+    <div
+      style={{
+        width: "50px",
+        height: "50px",
+        border: "5px solid #f3f3f3", // Light gray background
+        borderTop: "5px solid #4caf50", // Green color for the progress
+        borderRadius: "50%",
+        animation: "spin 1s linear infinite", // Add animation
+      }  }
+    ></div>
+    <style>
+      {`
+        @keyframes spin {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+      `}
+    </style>
+  </div>
+)}
+
+
+          {searchResults.length > 0 && (
+            <div>
+              <h3>Search Results:</h3>
+              <div className="search-results-grid">
+                {searchResults.map((result, index) => (
+                  <a
+                    key={index}
+                    href={result.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      src={result.link}
+                      alt={result.title}
+                      style={{
+                        maxWidth: "150px",
+                        height: "150px",
+                      }}
+                    />
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

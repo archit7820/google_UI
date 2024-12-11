@@ -1,5 +1,6 @@
 import React from 'react'
 import "./navbar.scss"
+import Link from 'next/link'
 
 //  <div className="search_lab_img"><img className='' src = "./sdfsdf.svg"  alt = "" /></div>
 // 
@@ -21,8 +22,8 @@ const Navbar = () => {
             </div>
 
           <div className="img_section_navbar">
-          <div className="google_app_img"><img className='app_img' src = "./apps_24dp_808080_FILL0_wght400_GRAD0_opsz24.svg" /></div>  
-          <div className="account_img"><img className='accont_name' src = "/profile.jpg"  alt = "" /></div>
+          <div className="google_app_img"><img className='app_img' src = "./apps_24dp_808080_FILL0_wght400_GRAD0_opsz24.svg"/></div>  
+          <Link href ="/"> <div className="account_img"><img className='accont_name' src = "/profile.jpg"  alt = "" /></div></Link>
           </div>
 
 

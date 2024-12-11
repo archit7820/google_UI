@@ -1,4 +1,74 @@
 
 .image_recognisation_container{
+    display: flex;
+    flex-direction: row;
+   
+    height: 100%;
     font-family: "Inter" , sans-serif ;
+ 
+}
+.headline_img{
+    color: aliceblue;
+    padding-bottom: 2rem;
+    font-size: 2rem;
+}
+.icon_logo_google{
+    position: absolute;
+    top : 1% ;
+    left : 50% ;
+    width: 120px ;
+    cursor: pointer;
+    height: 40px ;
+}
+.navbar_img{
+   
+
+}.button_cropandsearch{
+    color: white;
+    display: flex;
+    gap:1rem ;
+    margin-top: 1rem;
+    align-items: right ;
+    justify-content: right ;
+}
+.crop_button ,.search_button{
+    border: 1px solid gray;
+    padding: 0.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.navbar_img_recog{
+   
+
+
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    
+}
+
+body{
+    margin: 0;
+}
+.Image_uploadedtocrop{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+   width: 40% ;
+background: #000;
+height: 100vh;
+
+}
+.esponse_from_recog{
+    max-width: 50%;
+}
+.img_loaded{
+    width: 400px;
+    height: 300px;
+}
+.response_from_recog{
+    padding-left: 2rem;
+}
+.image_buttons{
 }
