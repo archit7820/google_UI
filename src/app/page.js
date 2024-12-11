@@ -7,7 +7,9 @@ import { useRouter } from "next/navigation";
 import Cropper from "cropperjs";
 import "cropperjs/dist/cropper.css";
 import axios from "axios";
-import AddShortcut from "./component/Shortcut/shortcut";
+import AddShortcut from "./component/Shortcut/Shortcut";
+
+
 
 
 export default function Home() {
