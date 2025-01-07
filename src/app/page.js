@@ -396,7 +396,7 @@ export default function Home() {
     <div className="google_search"     value={query}
       //onChange={handleInputChange}
       onClick={handleSearch_text}>Google Search</div>
-    <div className="feeling_lucky">I'm Feeling Lucky </div>
+    <div className="feeling_lucky">I&apos;m feeling lucky </div>
   
   </div>
   
