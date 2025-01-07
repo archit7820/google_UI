@@ -112,7 +112,11 @@ const AddShortcut = () => {
   };
 
   return (
+<>
+
     <div className="add_shortcut-container">
+
+
       <div className="shortcut">
         {shortcuts.map((shortcut) => (
           <div className="shortcut_section_menu_edit" key={shortcut.id}>
@@ -194,6 +198,7 @@ const AddShortcut = () => {
         </div>
       )}
     </div>
+    </>
   );
 };
 

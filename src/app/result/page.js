@@ -1,16 +1,14 @@
-
-
-
-  "use client";
-
+"use client"
+import { useState, useRef, useEffect } from "react";
 import Cropper from "cropperjs";
 import "cropperjs/dist/cropper.css";
 import axios from "axios";
-import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import "./recog.scss";
-import Navbar from "../component/Navbar/Navbar";
+
 import Link from "next/link";
+import Navbar_2 from "../component/Navbar_result/Navbar_2";
+import Footer from "../component/Footer/Footer";
 
 const ImageSearchWithCrop = () => {
   const [image, setImage] = useState(null);
@@ -30,7 +28,7 @@ const ImageSearchWithCrop = () => {
       }
     }
   }, []);
-    
+
   const GOOGLE_VISION_API_KEY = "AIzaSyC77QJ15pop2jx9m_FwqzW8f0ZTAW67yJ8";
   const GOOGLE_CSE_API_KEY = "AIzaSyC77QJ15pop2jx9m_FwqzW8f0ZTAW67yJ8";
   const GOOGLE_CX = "36763c8b75a36460d";
@@ -51,12 +49,19 @@ const ImageSearchWithCrop = () => {
     }
   }, [image]);
 
+  useEffect(() => {
+    if (image) {
+      handleSearch(); // Run the search automatically
+    }
+  }, [image]);
+  
   const handleCrop = () => {
     if (cropper) {
       const croppedCanvas = cropper.getCroppedCanvas();
       if (croppedCanvas) {
         const croppedImageUrl = croppedCanvas.toDataURL("image/jpeg");
         setCroppedImage(croppedImageUrl);
+        handleSearch(croppedImageUrl); // Automatically search after cropping
       } else {
         setError("Unable to crop the image. Please try again.");
       }
@@ -111,9 +116,9 @@ const ImageSearchWithCrop = () => {
     }
   };
 
-  const handleSearch = async () => {
-    const base64Image = croppedImage
-      ? croppedImage.split(",")[1]
+  const handleSearch = async (croppedImageUrl) => {
+    const base64Image = croppedImageUrl
+      ? croppedImageUrl.split(",")[1]
       : image?.split(",")[1];
 
     if (!base64Image) {
@@ -144,24 +149,26 @@ const ImageSearchWithCrop = () => {
 
   return (
     <div className="navbar_img_recog">
-      <div className="navbar_img">
-        <Navbar />
-      </div>
-      <div>
-        <Link href="/">
+      <Link href="/">
           <img className="icon_logo_google" src="./google_logo.svg" alt="Logo" />
         </Link>
+      <div className="navbar_img">
+        <Navbar_2 />
+      </div>
+      <div>
+        
       </div>
       <div className="image_recognisation_container">
         <div className="Image_uploadedtocrop">
           <div className="image_buttons">
-            <div className="headline_img">Search Similar Images</div>
+           
             {image && (
               <div>
                 <img
                   ref={imageRef}
                   src={image}
                   id="image-to-crop"
+                  className="img_src_main"
                   alt="Crop target"
                   style={{
                     maxWidth: "100%",
@@ -175,52 +182,48 @@ const ImageSearchWithCrop = () => {
             <button className="crop_button" onClick={handleCrop}>
               Crop and Confirm
             </button>
-            <button className="search_button" onClick={handleSearch}>
-              Search
-            </button>
           </div>
         </div>
         <div className="response_from_recog">
-        {loading && (
-  <div
-    style={{
-      marginTop: "20px",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-    }}
-  >
-    <p>Processing Image...</p>
-    <div
-      style={{
-        width: "50px",
-        height: "50px",
-        border: "5px solid #f3f3f3", // Light gray background
-        borderTop: "5px solid #4caf50", // Green color for the progress
-        borderRadius: "50%",
-        animation: "spin 1s linear infinite", // Add animation
-      }  }
-    ></div>
-    <style>
-      {`
-        @keyframes spin {
-          0% {
-            transform: rotate(0deg);
-          }
-          100% {
-            transform: rotate(360deg);
-          }
-        }
-      `}
-    </style>
-  </div>
-)}
-
+          {loading && (
+            <div
+              style={{
+                marginTop: "20px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <p>Processing Image...</p>
+              <div
+                style={{
+                  width: "50px",
+                  height: "50px",
+                  border: "5px solid #f3f3f3", // Light gray background
+                  borderTop: "5px solid #4caf50", // Green color for the progress
+                  borderRadius: "50%",
+                  animation: "spin 1s linear infinite", // Add animation
+                }}
+              ></div>
+              <style>
+                {`
+                  @keyframes spin {
+                    0% {
+                      transform: rotate(0deg);
+                    }
+                    100% {
+                      transform: rotate(360deg);
+                    }
+                  }
+                `}
+              </style>
+            </div>
+          )}
 
           {searchResults.length > 0 && (
             <div>
-              <h3>Search Results:</h3>
+             
               <div className="search-results-grid">
                 {searchResults.map((result, index) => (
                   <a
@@ -244,6 +247,7 @@ const ImageSearchWithCrop = () => {
           )}
         </div>
       </div>
+     
     </div>
   );
 };

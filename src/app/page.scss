@@ -1,11 +1,9 @@
 .home_page_google {
   display: flex;
   flex-direction: column;
-  width: 100% ; 
-  height: 100%;
-  font-family: 'Roboto', 'Arial', sans-serif;
-
- 
+  min-height: 100vh; /* Full height of the viewport */
+  width: 100%;
+  font-family: 'Roboto', 'Arial', sans-serif ; 
 }
 
 
@@ -13,9 +11,12 @@
 
 
 .home_page_container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  flex: 1; /* Takes up the remaining space */
+ // background-color: #f9f9f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 
   
 }
@@ -26,7 +27,14 @@
   
   .google_header {
     /* Add styles for the header if needed */
-    width: 100%;
+    flex: 0 0 60px; /* Fixed height for the navbar */
+  //background-color: #333;
+  color: white;
+  //display: flex;
+  width: 100vw ;
+  //align-items: center;
+  //justify-content: center;
+  text-align: center;
   }
   
 
@@ -38,32 +46,122 @@
     align-items: center;
     margin: 20px 0;
     position: absolute;
-    top: 15%;
+  
   }
   
-  .icon_logo_google {
-    width: 270px; /* Adjust the logo size */
-    height: auto;
-  }
  
+ 
+  .google_logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem 0;
+top: 15%;
+  
+    .icon_logo_google {
+      width: 270px; /* Default width for large screens */
+      height: auto; /* Maintain aspect ratio */
+      transition: width 0.3s ease; /* Smooth transition for resizing */
+  
+      /* Tablet Devices */
+      @media (max-width: 1023px) {
+        width: 250px; /* Smaller width for tablets */
+      }
+  
+      /* Mobile Devices */
+      @media (max-width: 767px) {
+        width: 220px; /* Smaller width for mobile screens */
+      }
+  
+      /* Extra Small Mobile Screens */
+      @media (max-width: 480px) {
+        width: 200px; /* Smallest width for very small screens */
+      }
+    }
+  }
+  
   // input field 
   .input_wrapper {
     min-height: 44px;
-   display: flex;
-    position: absolute ;
+    display: flex;
+    cursor: default; /* Normal cursor */
+    transition: all 0.3s ease; /* Smooth transition for the border */
+    position: absolute;
     font-size: 16px;
+    width: 600px;
     background-color: #ffffff;
     border-radius: 30px;
     box-shadow: 0px 0px 6px rgba(0.3, 0.3, 0.3, 0.3);
-     z-index: 100;
+    z-index: 100;
     flex-direction: column; /* Vertical stacking for better alignment */
-    top : 40% ;
-        font-family: 'Segoe UI', Tahoma, sans-serif;
+    top: 35%;
+    overflow :hidden ;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+  }
+  
+  /* For Tablets (Width: 768px to 1023px) */
+  @media (max-width: 1023px) {
+    .input_wrapper {
+      width: 80%; /* Adjust width for smaller screens */
+      font-size: 14px; /* Smaller font size */
+      top: 35%; /* Adjust vertical position */
+    }
+  }
+  
+  /* For Mobile (Width: up to 767px) */
+  @media (max-width: 767px) {
+    .input_wrapper {
+      width: 90%; /* Full width with padding for mobile */
+      font-size: 12px; /* Smaller font size for better fit */
+      min-height: 40px; /* Slightly reduce height */
+      top: 35%; /* Adjust vertical position */
+      border-radius: 20px; /* Smaller border radius for compact design */
+    }
+    .suggestions-dropdown {
+      max-height: 250px; /* Adjust as needed for 5 items */
+      overflow-y: auto; /* Enable vertical scrolling */
+     
+      padding: 10px; /* Add some padding for better spacing */
+      background-color: #fff; /* Dropdown background color */
+      z-index: 100; /* Ensure it stays above other elements */
+    }
+  }
+  
+  /* For Extra Small Mobile Screens (Width: up to 480px) */
+  @media (max-width: 480px) {
+    .input_wrapper {
+      width: 95%; /* Almost full width */
+      font-size: 10px; /* Further reduced font size */
+      min-height: 36px; /* Compact height */
+      top: 35%; /* Adjust vertical position */
+    }
+    .suggestions-dropdown {
+      max-height: 200px; /* Adjust as needed for 5 items */
+      overflow-y: auto; /* Enable vertical scrolling */
+      padding: 10px; /* Add some padding for better spacing */
+      background-color: #fff; /* Dropdown background color */
+      z-index: 100; /* Ensure it stays above other elements */
+    }
+  }
+  
+        .input_wrapper:hover{
+          cursor: pointer;
+          transform: scale(1.003);
+          box-shadow: 0px 0px 6px rgba(0.2, 0.2, 0.2, 0.2);
+         //  color: white; /* Optional: change text color */
+        }
+        input {
+          cursor: url('../../public/cursor.svg'), auto;
+        }
+        
+        
+        
+        
   .search_section{
     padding: 7.5px 12px;
     display: flex;
     flex-direction: row;
-    width: 746px;
+  
     align-items: center;
     justify-content: center;
   }
@@ -86,7 +184,7 @@
         background-color: #f0f0f0;
       }
     }
-  }
+  
   
 
 
@@ -154,7 +252,7 @@
     font-size: 16px;
     padding-top: 8px;
     padding-bottom: 8px;
-    width: 100%;
+    width: 550px;
   }
   
   .search_icon,
@@ -197,7 +295,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 720px; 
+    //max-width: 610px; 
     padding: 20px;
 
     color: #3C4043;
@@ -285,4 +383,124 @@ justify-content: space-between;
     align-items: center;
     margin-inline-start: 8px;
     color: #1A73E8;
+}
+
+// extra buttons
+.buttons_feeling_search{
+  display: flex;
+  gap  : 2rem ;
+  position: absolute;
+  top :50% ;
+}
+
+.google_search ,
+.feeling_lucky{
+  padding: 10px 20px ;
+ // box-shadow: 0px 0px 6px rgba(0.3, 0.3, 0.3, 0.3);
+ //border: 1px solid  #3C4043;
+  border-radius: 5px;
+  font-size: 14px;
+  background-color:rgb(247, 249, 250) ;
+cursor: pointer;
+color:  rgba(0, 0, 0, .87);
+}
+.google_search:hover{
+  border: 1px solid  #dfdfdf;
+  box-shadow: 0px 3px 3px rgba(202, 202, 202, 0.3);
+
+}
+.feeling_lucky:hover{
+  border: 1px solid  #dfdfdf;
+  box-shadow: 0px 3px 3px rgba(202, 202, 202, 0.3);
+}
+
+.footer_section{
+  flex: 0 0 40px; /* Fixed height for the footer */
+  //background-color: #444;
+  color: white;
+  display: flex;
+width: 100vw;
+
+ 
+
+}
+
+.delete-button {
+  display: none; /* Hide the delete button initially */
+  position: absolute; /* To position it relative to the parent */
+  right: 10px; /* Adjust based on your layout */
+  top: 50%; /* Adjust based on your layout */
+  text-decoration: underline;
+  transform: translateY(-50%); /* Center vertically */
+}
+
+.suggestion-item:hover .delete-button {
+  display: block; /* Show the delete button on hover */
+}
+.suggestion-item:hover{
+  background-color: #ecebeb;
+
+}
+
+.suggestion-item{
+  position: relative; /* To ensure the delete button stays within the parent div */
+  padding: 1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+}
+// rsponsive 
+
+
+@media (min-width: 768px) and (max-width: 1023px)  {
+
+}
+@media (max-width: 767px) {
+
+}
+
+
+
+
+
+
+.suggestions-dropdown {
+  max-height: 300px; /* Adjust as needed for 5 items */
+  overflow-y: auto; /* Enable vertical scrolling */
+ 
+  padding: 10px; /* Add some padding for better spacing */
+  background-color: #fff; /* Dropdown background color */
+  z-index: 100; /* Ensure it stays above other elements */
+}
+
+/* Optional: Style scrollbar */
+.suggestions-dropdown::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+.suggestions-dropdown::-webkit-scrollbar-thumb {
+  background-color: #ccc; /* Scrollbar thumb color */
+  border-radius: 4px; /* Rounded edges for the scrollbar thumb */
+}
+
+.suggestions-dropdown::-webkit-scrollbar-thumb:hover {
+  background-color: #888; /* Darker color on hover */
+}
+
+.suggestion-item {
+  display: flex; /* Align text and delete button horizontally */
+  justify-content: space-between; /* Space between text and delete button */
+  padding: 5px; /* Add some padding around each item */
+  cursor: pointer; /* Pointer cursor on hover */
+}
+
+.suggestion-item:hover {
+  background-color: #f0f0f0; /* Highlight suggestion on hover */
+}
+
+.delete-button {
+  color: rgb(0, 0, 0);
+  font-size: 12px;
+  cursor: pointer;
+  margin-left: 10px;
 }

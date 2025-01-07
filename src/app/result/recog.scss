@@ -2,8 +2,8 @@
 .image_recognisation_container{
     display: flex;
     flex-direction: row;
-   
-    height: 100%;
+   width: 100%;
+  //  height: 100;
     font-family: "Inter" , sans-serif ;
  
 }
@@ -14,11 +14,11 @@
 }
 .icon_logo_google{
     position: absolute;
-    top : 1% ;
-    left : 50% ;
-    width: 120px ;
+    top : 4% ;
+    left : 2% ;
+    width: 80px ;
     cursor: pointer;
-    height: 40px ;
+    height: 25px ;
 }
 .navbar_img{
    
@@ -55,16 +55,19 @@ body{
     flex-direction: column;
     align-items: center;
     justify-content: center;
+padding: 3rem;
+   
    width: 40% ;
 background: #000;
-height: 100vh;
+height: 100%;
 
 }
-.esponse_from_recog{
-    max-width: 50%;
+
+.response_from_recog{
+    width: 45%;
 }
 .img_loaded{
-    width: 400px;
+    max-width: 300px;
     height: 300px;
 }
 .response_from_recog{
@@ -72,3 +75,81 @@ height: 100vh;
 }
 .image_buttons{
 }
+
+.search-results-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Create 4 equal-width columns */
+    gap: 16px; /* Adjust the gap between grid items */
+   // padding: 20px; /* Optional, for some padding around the grid */
+    padding-top: 0px;
+  }
+  
+  .search-results-grid a {
+    display: block;
+    text-align: center; /* Center align the content inside the anchor */
+  }
+  
+  .search-results-grid img {
+    width: 100%;
+    height: auto;
+    max-width: 150px;
+    max-height: 150px;
+  }
+  
+
+  @media (max-width: 1023px) {
+    
+  }
+
+  /* Mobile Devices */
+  @media (max-width: 767px) {
+    .image_recognisation_container{
+        flex-direction: column;
+    }
+    .response_from_recog{
+        padding-left: 0rem;
+        padding-top: 1rem;
+    }
+
+    .Image_uploadedtocrop{
+    display: flex;
+    width: 100% ;
+    padding: 0rem;
+    background: #000;
+    height: 100%;
+    }
+    .button_cropandsearch{
+        color: white;
+        display: flex;
+        gap:1rem ;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+       
+  }
+  }
+
+  /* Extra Small Mobile Screens */
+  @media (max-width: 480px) {
+    .image_recognisation_container{
+        flex-direction: column;
+        
+    }
+    .response_from_recog{
+        padding-left: 0rem;
+        padding-top: 1rem;
+    }
+    .Image_uploadedtocrop{
+   padding: 0rem;
+        width: 100% ;
+    background: #000;
+    height: 100%;
+    }
+    .button_cropandsearch{
+        color: white;
+        display: flex;
+        gap:1rem ;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+       
+  }
+  }

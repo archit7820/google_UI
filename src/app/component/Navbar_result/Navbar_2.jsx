@@ -4,32 +4,15 @@ import Link from 'next/link'
 
 //  <div className="search_lab_img"><img className='' src = "./sdfsdf.svg"  alt = "" /></div>
 // 
-const Navbar = () => {
+const Navbar_2 = () => {
   return (
     <div className='navbar_container'>
     
        <div className="right_options">
        
 
-        <a 
-  href="https://about.google/?fg=1&utm_source=google-IN&utm_medium=referral&utm_campaign=hp-header" 
-  target="_blank" 
-  rel="noopener noreferrer"
-  className="store_navbar_link"
-  style={{textDecoration : "none"}}
->
-<div className="about_navbar" style={{ color : "black"}}>About</div>
-</a>
+      
 
-        <a 
-  href="https://store.google.com/in/?utm_source=hp_header&utm_medium=google_ooo&utm_campaign=GS100042&hl=en-GB&pli=1" 
-  target="_blank" 
-  rel="noopener noreferrer"
-  className="store_navbar_link"
-  style={{textDecoration : "none"}}
->
-  <div className="store_navbar" style={{ color : "black"}}>Store</div>
-</a>
 
        </div>
         <div className="left_options">
@@ -58,5 +41,5 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+export default Navbar_2
 
